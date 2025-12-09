@@ -1,0 +1,6 @@
+@Ekiva.API_HostAddress = http://localhost:5002
+
+GET {{Ekiva.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

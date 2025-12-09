@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{80A218DC-5A16-468B-A89F-026158B02B96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ekiva.API", "src\Ekiva.API\Ekiva.API.csproj", "{15F40CDF-2E66-4F9E-8ED7-51E735B2668D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ekiva.Core", "src\Ekiva.Core\Ekiva.Core.csproj", "{18F421EB-67C2-42C6-B095-016424ED57B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ekiva.Application", "src\Ekiva.Application\Ekiva.Application.csproj", "{0C49A1CD-2A67-46CA-8C18-951D56CAC8AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ekiva.Infrastructure", "src\Ekiva.Infrastructure\Ekiva.Infrastructure.csproj", "{A8CC93B2-AED2-4981-B610-B2E1E87B4938}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E4B284E6-A1A9-4352-A2F4-4269F31E9C5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ekiva.UnitTests", "tests\Ekiva.UnitTests\Ekiva.UnitTests.csproj", "{A28CCBD1-9E9C-47EE-99E2-A74AA082F4E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ekiva.IntegrationTests", "tests\Ekiva.IntegrationTests\Ekiva.IntegrationTests.csproj", "{2DC5FA2F-BF73-43E7-A01F-7AE5276EE8B9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15F40CDF-2E66-4F9E-8ED7-51E735B2668D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15F40CDF-2E66-4F9E-8ED7-51E735B2668D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15F40CDF-2E66-4F9E-8ED7-51E735B2668D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15F40CDF-2E66-4F9E-8ED7-51E735B2668D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18F421EB-67C2-42C6-B095-016424ED57B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18F421EB-67C2-42C6-B095-016424ED57B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18F421EB-67C2-42C6-B095-016424ED57B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18F421EB-67C2-42C6-B095-016424ED57B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C49A1CD-2A67-46CA-8C18-951D56CAC8AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C49A1CD-2A67-46CA-8C18-951D56CAC8AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C49A1CD-2A67-46CA-8C18-951D56CAC8AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C49A1CD-2A67-46CA-8C18-951D56CAC8AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8CC93B2-AED2-4981-B610-B2E1E87B4938}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8CC93B2-AED2-4981-B610-B2E1E87B4938}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8CC93B2-AED2-4981-B610-B2E1E87B4938}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8CC93B2-AED2-4981-B610-B2E1E87B4938}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A28CCBD1-9E9C-47EE-99E2-A74AA082F4E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A28CCBD1-9E9C-47EE-99E2-A74AA082F4E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A28CCBD1-9E9C-47EE-99E2-A74AA082F4E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A28CCBD1-9E9C-47EE-99E2-A74AA082F4E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DC5FA2F-BF73-43E7-A01F-7AE5276EE8B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DC5FA2F-BF73-43E7-A01F-7AE5276EE8B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DC5FA2F-BF73-43E7-A01F-7AE5276EE8B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DC5FA2F-BF73-43E7-A01F-7AE5276EE8B9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{15F40CDF-2E66-4F9E-8ED7-51E735B2668D} = {80A218DC-5A16-468B-A89F-026158B02B96}
+		{18F421EB-67C2-42C6-B095-016424ED57B5} = {80A218DC-5A16-468B-A89F-026158B02B96}
+		{0C49A1CD-2A67-46CA-8C18-951D56CAC8AA} = {80A218DC-5A16-468B-A89F-026158B02B96}
+		{A8CC93B2-AED2-4981-B610-B2E1E87B4938} = {80A218DC-5A16-468B-A89F-026158B02B96}
+		{A28CCBD1-9E9C-47EE-99E2-A74AA082F4E9} = {E4B284E6-A1A9-4352-A2F4-4269F31E9C5F}
+		{2DC5FA2F-BF73-43E7-A01F-7AE5276EE8B9} = {E4B284E6-A1A9-4352-A2F4-4269F31E9C5F}
+	EndGlobalSection
+EndGlobal
