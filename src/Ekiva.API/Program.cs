@@ -70,19 +70,20 @@ builder.Services.AddAutoMapper(typeof(Ekiva.Application.Mappings.MappingProfile)
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngularDev",
-        policy =>
-        {
-            policy.WithOrigins(
-                    "http://localhost:4200",
-                    "https://black-plant-0769c4603.azurestaticapps.net",
-                    "https://black-plant-0769c4603.1.azurestaticapps.net",
-                    "https://black-plant-0769c4603.2.azurestaticapps.net"
-                  )
-                  .AllowAnyHeader()
-                  .AllowAnyMethod()
-                  .AllowCredentials();
-        });
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins(
+                "http://localhost:4200",
+                "https://black-plant-0769c4603.azurestaticapps.net",
+                "https://black-plant-0769c4603.1.azurestaticapps.net",
+                "https://black-plant-0769c4603.2.azurestaticapps.net",
+                "https://black-plant-0769c4603.3.azurestaticapps.net"
+              )
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials()
+              .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
+    });
 });
 
 builder.Services.AddControllers();
@@ -99,7 +100,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("AllowAngularDev");
+app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
