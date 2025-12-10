@@ -73,9 +73,15 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAngularDev",
         policy =>
         {
-            policy.WithOrigins("http://localhost:4200")
+            policy.WithOrigins(
+                    "http://localhost:4200",
+                    "https://black-plant-0769c4603.azurestaticapps.net",
+                    "https://black-plant-0769c4603.1.azurestaticapps.net",
+                    "https://black-plant-0769c4603.2.azurestaticapps.net"
+                  )
                   .AllowAnyHeader()
-                  .AllowAnyMethod();
+                  .AllowAnyMethod()
+                  .AllowCredentials();
         });
 });
 
