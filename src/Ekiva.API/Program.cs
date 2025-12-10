@@ -82,6 +82,7 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials()
+              .WithExposedHeaders("Content-Disposition", "Authorization")
               .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
     });
 });
@@ -99,8 +100,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// IMPORTANT: CORS must come before UseHttpsRedirection and Authentication
 app.UseCors();
+app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
