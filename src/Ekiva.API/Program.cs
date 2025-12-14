@@ -6,9 +6,6 @@ using Ekiva.Application.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Ekiva.Core.Entities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,32 +16,11 @@ builder.Services.AddDbContext<EkivaDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // 2. Identity Configuration with ApplicationUser
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<EkivaDbContext>()
-    .AddDefaultTokenProviders();
+builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<EkivaDbContext>();
 
-// 3. JWT Authentication
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? "YourSuperSecretKeyThatIsAtLeast32CharactersLong!"))
-    };
-});
-
-// 4. Dependency Injection
+// 3. Dependency Injection
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IPolicyRepository, PolicyRepository>();
 builder.Services.AddScoped<IRatingService, Ekiva.Application.Services.RatingService>();
@@ -108,7 +84,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-// Removed MapIdentityApi - using custom AuthController instead
+app.MapIdentityApi<ApplicationUser>(); // Basic Identity Endpoints with ApplicationUser
 
 // Seed Database and Roles
 using (var scope = app.Services.CreateScope())
@@ -133,7 +109,6 @@ static async Task SeedRolesAndAdminUser(IServiceProvider serviceProvider)
 {
     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-    var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
 
     // Define roles
     string[] roles = { "Admin", "Manager", "Broker", "User" };
@@ -143,18 +118,15 @@ static async Task SeedRolesAndAdminUser(IServiceProvider serviceProvider)
         if (!await roleManager.RoleExistsAsync(role))
         {
             await roleManager.CreateAsync(new IdentityRole(role));
-            logger.LogInformation($"Role '{role}' created successfully");
         }
     }
 
-    // Create or update admin user
+    // Create admin user if not exists
     var adminEmail = "admin@ekiva.com";
-    var adminPassword = "Admin@123";
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
     if (adminUser == null)
     {
-        // Create new admin user
         adminUser = new ApplicationUser
         {
             UserName = adminEmail,
@@ -165,45 +137,10 @@ static async Task SeedRolesAndAdminUser(IServiceProvider serviceProvider)
             IsActive = true
         };
 
-        var result = await userManager.CreateAsync(adminUser, adminPassword);
+        var result = await userManager.CreateAsync(adminUser, "Admin@123");
         if (result.Succeeded)
         {
             await userManager.AddToRoleAsync(adminUser, "Admin");
-            logger.LogInformation($"Admin user created successfully with email: {adminEmail}");
-        }
-        else
-        {
-            logger.LogError($"Failed to create admin user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
-        }
-    }
-    else
-    {
-        // User exists, reset password to ensure it's correct
-        logger.LogInformation($"Admin user already exists. Resetting password...");
-        
-        var token = await userManager.GeneratePasswordResetTokenAsync(adminUser);
-        var resetResult = await userManager.ResetPasswordAsync(adminUser, token, adminPassword);
-        
-        if (resetResult.Succeeded)
-        {
-            logger.LogInformation("Admin password reset successfully");
-            
-            // Ensure user is active and in Admin role
-            if (!adminUser.IsActive)
-            {
-                adminUser.IsActive = true;
-                await userManager.UpdateAsync(adminUser);
-            }
-            
-            var userRoles = await userManager.GetRolesAsync(adminUser);
-            if (!userRoles.Contains("Admin"))
-            {
-                await userManager.AddToRoleAsync(adminUser, "Admin");
-            }
-        }
-        else
-        {
-            logger.LogError($"Failed to reset admin password: {string.Join(", ", resetResult.Errors.Select(e => e.Description))}");
         }
     }
 }
